@@ -13,6 +13,7 @@ class Pelicula(models.Model):
     duration = models.CharField(max_length=50, blank=True, null=True)
     listed_in = models.CharField(max_length=200, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+    poster = models.ImageField(upload_to='posters/', blank=True, null=True) 
 
     def __str__(self):
         return self.title
@@ -31,6 +32,8 @@ class Serie(models.Model):
     duration = models.CharField(max_length=50, blank=True, null=True)
     listed_in = models.CharField(max_length=200, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+    poster = models.ImageField(upload_to='posters/', blank=True, null=True)
+
 
     def __str__(self):
         return self.title

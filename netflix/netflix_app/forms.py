@@ -8,7 +8,7 @@ class PeliculaForm(forms.ModelForm):
         fields = [
             'show_id', 'title', 'director', 'cast', 'country',
             'date_added', 'release_year', 'rating', 'duration',
-            'listed_in', 'description'
+            'listed_in', 'description', 'poster'
         ]
 
 
@@ -19,7 +19,7 @@ class SerieForm(forms.ModelForm):
         fields = [
             'show_id', 'title', 'director', 'cast', 'country',
             'date_added', 'release_year', 'rating', 'duration',
-            'listed_in', 'description'
+            'listed_in', 'description', 'poster'
         ]
 
 

@@ -1,0 +1,17 @@
+{% extends "netflix_app/base.html" %}
+
+{% block title %}Editar Película{% endblock %}
+
+{% block content %}
+<h1>Editar Película</h1>
+
+<form method="post"enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn" style="background: #4CAF50; color: white; padding: 8px 14px; border-radius: 6px;">Actualizar</button>
+</form>
+
+<p style="margin-top: 10px;">
+    <a href="{% url 'netflix_app:detalle_pelicula' pelicula.pk %}" class="btn" style="background: #555; color: white; padding: 8px 14px; border-radius: 6px;">⬅️ Volver al detalle</a>
+</p>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "netflix_app/base.html" %}
+
+{% block title %}{{ accion }} Película{% endblock %}
+
+{% block content %}
+<h1>{{ accion }} Película</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn" style="background: #4CAF50; color: white; padding: 8px 14px; border-radius: 6px;">Guardar</button>
+</form>
+
+<p style="margin-top: 10px;">
+    <a href="{% url 'netflix_app:lista_peliculas' %}" class="btn" style="background: #555; color: white; padding: 8px 14px; border-radius: 6px;">⬅️ Volver a la lista</a>
+</p>
+{% endblock %}
