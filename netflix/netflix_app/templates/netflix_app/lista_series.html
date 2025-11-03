@@ -1,0 +1,42 @@
+{% extends "netflix_app/base.html" %}
+
+{% block title %}Series{% endblock %}
+
+{% block content %}
+<h1>Series</h1>
+
+<table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; color: #fff; background-color: #333; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);">
+    <thead style="background-color: #e84d13;">
+        <tr>
+            <th>Título</th>
+            <th>Director</th>
+            <th>Reparto</th>
+            <th>País</th>
+            <th>Año de Lanzamiento</th>
+            <th>Duración</th>
+            <th>Categorías</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for serie in series %}
+        <tr>
+            <td>
+                <a style="color: #fff;" href="{% url 'netflix_app:detalle_serie' serie.pk %}">
+                    {{ serie.title }}
+                </a>
+            </td>
+            <td>{{ serie.director|default:"-" }}</td>
+            <td>{{ serie.cast|default:"-" }}</td>
+            <td>{{ serie.country|default:"-" }}</td>
+            <td>{{ serie.release_year|default:"-" }}</td>
+            <td>{{ serie.duration|default:"-" }}</td>
+            <td>{{ serie.listed_in|default:"-" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7">No hay series registradas.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "netflix/base.html" %}
+
+{% block title %}Consultas{% endblock %}
+
+{% block content %}
+<h1>Consultas</h1>
+
+<table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; color: #fff; background-color: #333; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);">
+    <thead style="background-color: #e84d13;">
+        <tr>
+            <th>Título</th>
+            <th>Director</th>
+            <th>Reparto</th>
+            <th>País</th>
+            <th>Año de Lanzamiento</th>
+            <th>Duración</th>
+            <th>Categorías</th>
+            <th>Resultado Predicción</th>
+            <th>Fecha de Creación</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for consulta in consultas %}
+        <tr>
+            <td>{{ consulta.titulo }}</td>
+            <td>{{ consulta.director|default:"-" }}</td>
+            <td>{{ consulta.reparto|default:"-" }}</td>
+            <td>{{ consulta.pais|default:"-" }}</td>
+            <td>{{ consulta.fecha_lanzamiento|default:"-" }}</td>
+            <td>{{ consulta.duracion|default:"-" }}</td>
+            <td>{{ consulta.categorias|default:"-" }}</td>
+            <td>{{ consulta.resultado_prediccion|default:"Pendiente" }}</td>
+            <td>{{ consulta.fecha_creacion|date:"d/m/Y H:i" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="9">No hay consultas registradas.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

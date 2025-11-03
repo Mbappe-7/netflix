@@ -1,0 +1,43 @@
+{% extends "netflix_app/base.html" %}
+
+{% block title %}Películas{% endblock %}
+
+{% block content %}
+<h1>Películas</h1>
+<p>
+    <a href="{% url 'estudiantes:crear_pelicula' %}" class="btn">➕ Nueva película</a>
+</p>
+
+<table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; color: #fff; background-color: #333; box-shadow: 0 4px 8px rgba(0, 0, 0, 3);">
+    <thead style="background-color: #e84d13;">
+        <tr>
+            <th>Título</th>
+            <th>Director</th>
+            <th>País</th>
+            <th>Año de lanzamiento</th>
+            <th>Duración</th>
+            <th>Clasificación</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pelicula in peliculas %}
+        <tr>
+            <td>
+                <a style="color: #fff;" href="{% url 'estudiantes:detalle_pelicula' pelicula.pk %}">
+                    {{ pelicula.title }}
+                </a>
+            </td>
+            <td>{{ pelicula.director }}</td>
+            <td>{{ pelicula.country }}</td>
+            <td>{{ pelicula.release_year }}</td>
+            <td>{{ pelicula.duration }}</td>
+            <td>{{ pelicula.rating }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No hay películas registradas.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

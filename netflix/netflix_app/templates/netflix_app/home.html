@@ -1,0 +1,139 @@
+{% extends "netflix_app/base.html" %}
+{% load static %}
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    background-color: #141414;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+  }
+
+  h1 {
+    text-align: center;
+    color: #e50914;
+    margin-top: 30px;
+  }
+
+  .peliculas {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 25px;
+    padding: 40px;
+    justify-items: center;
+  }
+
+  .pelicula {
+    background-color: #1f1f1f;
+    border-radius: 15px;
+    overflow: hidden;
+    width: 200px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .pelicula:hover {
+    transform: scale(1.07);
+    box-shadow: 0 0 20px rgba(229, 9, 20, 0.6);
+  }
+
+  .pelicula img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-bottom: 3px solid #e50914;
+  }
+
+  .pelicula h3 {
+    margin: 10px 0 5px 0;
+    font-size: 1em;
+    color: #e50914;
+  }
+
+  .pelicula p {
+    font-size: 0.85em;
+    color: #bbb;
+    margin: 2px 0 10px 0;
+  }
+
+  @media (max-width: 1200px) {
+    .peliculas {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .peliculas {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .peliculas {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>
+
+<h1>🎬 Catálogo de Netflix</h1>
+
+<div class="peliculas">
+  <div class="pelicula">
+    <img src="{% static 'imag/25412099_1.jpg' %}" alt="Los 100">
+    <h3>Los 100</h3>
+    <p>Director: Jason Rothenberg</p>
+    <p>País: Estados Unidos</p>
+  </div>
+
+  <div class="pelicula">
+    <img src="{% static 'imag/dark.jpg' %}" alt="Dark">
+    <h3>Dark</h3>
+    <p>Director: Baran bo Odar</p>
+    <p>País: Alemania</p>
+  </div>
+
+  <div class="pelicula">
+    <img src="{% static 'imag/lacasadepapel.jpg' %}" alt="La Casa de Papel">
+    <h3>La Casa de Papel</h3>
+    <p>Director: Álex Pina</p>
+    <p>País: España</p>
+  </div>
+
+  <div class="pelicula">
+    <img src="{% static 'imag/stranger.webp' %}" alt="Stranger Things">
+    <h3>Stranger Things</h3>
+    <p>Director: The Duffer Brothers</p>
+    <p>País: Estados Unidos</p>
+  </div>
+
+  <div class="pelicula">
+    <img src="{% static 'imag/squidgame.jpg' %}" alt="Squid Game">
+    <h3>Squid Game</h3>
+    <p>Director: Hwang Dong-hyuk</p>
+    <p>País: Corea del Sur</p>
+  </div>
+
+  <div class="pelicula">
+    <img src="{% static 'imag/thewicher.jpg' %}" alt="The Witcher">
+    <h3>The Witcher</h3>
+    <p>Director: Lauren Schmidt Hissrich</p>
+    <p>País: Polonia / Estados Unidos</p>
+  </div>
+
+  <div class="pelicula">
+    <img src="{% static 'imag/peakyblinders.jpg' %}" alt="Peaky Blinders">
+    <h3>Peaky Blinders</h3>
+    <p>Director: Steven Knight</p>
+    <p>País: Reino Unido</p>
+  </div>
+
+  <div class="pelicula">
+    <img src="{% static 'imag/theumbrellaacademy.webp' %}" alt="The Umbrella Academy">
+    <h3>The Umbrella Academy</h3>
+    <p>Director: Steve Blackman</p>
+    <p>País: Estados Unidos</p>
+  </div>
+</div>
+
+{% endblock %}
