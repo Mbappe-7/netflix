@@ -21,11 +21,5 @@ urlpatterns = [
     path("series/eliminar/<int:id>/", views.eliminar_serie, name="eliminar_serie"),
     path("series/<int:id>/", views.detalle_serie, name="detalle_serie"),
     # CONSULTAS IA
-    path("consultas/", views.lista_consultas, name="lista_consultas"),
-    path("consultas/editar/<int:id>/", views.editar_consulta, name="editar_consulta"),
-    path(
-        "consultas/eliminar/<int:id>/",
-        views.eliminar_consulta,
-        name="eliminar_consulta",
-    ),
+    path('consulta/', views.formulario_consulta, name='formulario_consulta'),
 ]

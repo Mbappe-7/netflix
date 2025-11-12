@@ -1,7 +1,23 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Pelicula, Serie, Consulta
 from .forms import PeliculaForm, SerieForm, ConsultaForm
+from sklearn.metrics.pairwise import cosine_similarity
+import pickle
+import os
+import pandas as pd
+import joblib
+from django.conf import settings
 
+# 🔹 Rutas a tus archivos
+RUTA_IA = os.path.join(settings.BASE_DIR, 'netflix_app', 'ia')
+RUTA_CSV = os.path.join(RUTA_IA, 'peliculas_procesadas.csv')
+RUTA_MODELO = os.path.join(RUTA_IA, 'modelo_similitud.pkl')
+RUTA_VECTORIZER = os.path.join(RUTA_IA, 'vectorizer.pkl')
+
+# 🔹 Cargar archivos una sola vez
+df_peliculas = pd.read_csv(RUTA_CSV, encoding='utf-8')
+modelo_similitud = joblib.load(RUTA_MODELO)
+vectorizer = joblib.load(RUTA_VECTORIZER)
 
 # ---------------- HOME ----------------
 def home(request):
@@ -100,26 +116,34 @@ def detalle_serie(request, id):
 
 
 # ---------------- CONSULTAS ----------------
-def lista_consultas(request):
-    consultas = Consulta.objects.all()
-    return render(request, "netflix_app/lista_consultas.html", {"consultas": consultas})
 
 
-def editar_consulta(request, id):
-    consulta = get_object_or_404(Consulta, id=id)
-    if request.method == "POST":
-        form = ConsultaForm(request.POST, instance=consulta)
-        if form.is_valid():
-            form.save()
-            return redirect("netflix_app:lista_consultas")
-    else:
-        form = ConsultaForm(instance=consulta)
-    return render(
-        request, "netflix_app/editar_consulta.html", {"form": form, "accion": "Editar"}
-    )
+def formulario_consulta(request):
+    if request.method == 'POST':
+        consulta = request.POST.get('consulta')
 
+        # Obtener la ruta base del proyecto
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        ia_path = os.path.join(base_dir, 'ia')
 
-def eliminar_consulta(request, id):
-    consulta = get_object_or_404(Consulta, id=id)
-    consulta.delete()
-    return redirect("netflix_app:lista_consultas")
+        # Cargar el modelo y el vectorizador con rutas absolutas
+        with open(os.path.join(ia_path, '/workspaces/netflix/netflix/netflix_app/ia/modelo_similitud.pkl'), 'rb') as f:
+            modelo_similitud = pickle.load(f)
+        with open(os.path.join(ia_path, '/workspaces/netflix/netflix/netflix_app/ia/vectorizer.pkl'), 'rb') as f:
+            vectorizer = pickle.load(f)
+
+        # Cargar el dataset
+        df = pd.read_csv(os.path.join(ia_path, '/workspaces/netflix/netflix/netflix_app/ia/peliculas_procesadas.csv'))
+
+        if not consulta:
+            return render(request, '/workspaces/netflix/netflix/netflix_app/templates/netflix_app/formulario_consulta.html', {'error': 'Por favor, escribe una película o género.'})
+
+        # Transformar la consulta y calcular similitudes
+        vector_consulta = vectorizer.transform([consulta])
+        similitudes = cosine_similarity(vector_consulta, modelo_similitud)[0]
+        indices_similares = similitudes.argsort()[-5:][::-1]
+        recomendaciones = df.iloc[indices_similares][['titulo', 'genero', 'año', 'duracion', 'director', 'pais', 'calificacion']]
+
+        return render(request, 'consulta.html', {'recomendaciones': recomendaciones.to_dict(orient='records')})
+
+    return render(request, '/workspaces/netflix/netflix/netflix_app/templates/netflix_app/formulario_consulta.html')

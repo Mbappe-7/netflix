@@ -43,16 +43,7 @@ class SerieForm(forms.ModelForm):
 
 
 # ---------------- CONSULTAS ----------------
-class ConsultaForm(forms.ModelForm):
-    class Meta:
-        model = Consulta
-        fields = [
-            "titulo",
-            "director",
-            "reparto",
-            "pais",
-            "fecha_lanzamiento",
-            "duracion",
-            "categorias",
-            "descripcion",
-        ]
+
+
+class ConsultaForm(forms.Form):
+    titulo = forms.CharField(max_length=100, label="Película que te gustó")
