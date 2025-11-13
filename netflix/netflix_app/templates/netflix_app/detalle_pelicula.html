@@ -1,29 +1,28 @@
 {% extends "netflix_app/base.html" %}
+{% block title %}Detalles de {{ pelicula.title }}{% endblock %}
 {% block content %}
-<div class="container mt-5">
-  {% if error %}
-    <p class="text-danger">{{ error }}</p>
-  {% else %}
-    <h2>{{ pelicula.title }}</h2>
-    <hr>
 
-    <ul class="list-group">
-      {% for key, value in pelicula.items %}
-        <li class="list-group-item"><strong>{{ key|title }}:</strong> {{ value }}</li>
-      {% endfor %}
-    </ul>
-
-    <hr>
-    <h4>Películas similares</h4>
+{% if error %}
+  <h2 style="color: red;">{{ error }}</h2>
+{% else %}
+  <div style="width:80%; margin:auto; padding:20px; font-family:'Poppins', sans-serif;">
+    <h1 style="color:#ff4500;">🎬 {{ titulo }}</h1>
+    <p><strong>Género:</strong> {{ genero }}</p>
+    <p><strong>Año:</strong> {{ anio }}</p>
+    <p><strong>Duración:</strong> {{ duracion }}</p>
+    <p><strong>Director:</strong> {{ director }}</p>
+    <p><strong>País:</strong> {{ pais }}</p>
     {% if recomendaciones %}
+      <h3 style="margin-top:30px; color:#ff4500;">Películas relacionadas:</h3>
       <ul>
-        {% for r in recomendaciones %}
-          <li>{{ r.titulo }} ({{ r.similitud }}%)</li>
+        {% for rec in recomendaciones %}
+          <li>{{ rec }}</li>
         {% endfor %}
       </ul>
-    {% else %}
-      <p>No hay recomendaciones disponibles.</p>
     {% endif %}
-  {% endif %}
-</div>
+
+    <a href="{% url 'netflix_app:lista_peliculas' %}" style="display:inline-block; margin-top:20px; color:#fff; background:#ff4500; padding:10px 20px; border-radius:8px; text-decoration:none;">⬅ Volver a la lista</a>
+  </div>
+{% endif %}
+
 {% endblock %}

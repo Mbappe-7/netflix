@@ -18,31 +18,45 @@ def home(request):
 
 # ---------------- PELÍCULAS ----------------
 
+ruta_ia = os.path.join(settings.BASE_DIR, 'netflix_app', 'ia')
+
+# Cargar el dataset
+df = pd.read_csv(os.path.join(ruta_ia, 'df_movies.csv'), sep=',')
+print("Columnas del dataset:", df.columns.tolist())
+print("Primeras filas:\n", df.head())
 
 
 # --- Cargar dataset global ---
-ruta_ia = os.path.join(settings.BASE_DIR, 'netflix_app', 'ia')
-df = pd.read_csv(os.path.join(ruta_ia, 'df_movies.csv'))
-
-# --- Vista para mostrar todas las películas ---
 def lista_peliculas(request):
-    peliculas = df[['titulo']].reset_index().to_dict(orient='records')
+    peliculas = df.reset_index().to_dict(orient='records')
     return render(request, 'netflix_app/lista_peliculas.html', {'peliculas': peliculas})
 
 # --- Vista para mostrar detalles de una película ---
 def detalle_pelicula(request, id):
-    if id < 0 or id >= len(df):
-        return render(request, 'netflix_app/detalle_pelicula.html', {'error': 'Película no encontrada.'})
+    ruta_ia = os.path.join(settings.BASE_DIR, 'netflix_app', 'ia')
+    df = pd.read_csv(os.path.join(ruta_ia, 'df_movies.csv'))
 
-    pelicula = df.iloc[id].to_dict()
+    if id < len(df):
+        pelicula = df.iloc[id]
+        context = {
+            'titulo': pelicula['titulo'],
+            'genero': pelicula['genero'],
+            'anio': pelicula['aÃ±o'],
+            'duracion': pelicula['duracion'],
+            'director': pelicula['director'],
+            'pais': pelicula['pais'],
+        }
+    else:
+        context = {
+            'titulo': 'Película no encontrada',
+            'genero': '',
+            'anio': '',
+            'duracion': '',
+            'director': '',
+            'pais': '',
+        }
 
-    # Opcional: recomendaciones relacionadas
-    recomendaciones = recomendar_peliculas(pelicula['title'], 5)
-
-    return render(request, 'netflix_app/detalle_pelicula.html', {
-        'pelicula': pelicula,
-        'recomendaciones': recomendaciones
-    })
+    return render(request, 'netflix_app/detalle_pelicula.html', context)
 
 # ---------------- RECOMENDADOR ----------------
 
