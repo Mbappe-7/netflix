@@ -1,36 +1,29 @@
 {% extends "netflix_app/base.html" %}
-
-{% block title %}Película: {{ pelicula.title }}{% endblock %}
-
 {% block content %}
-<h1>Detalle de la Película</h1>
-{% if pelicula.poster %}
-    <img src="{{ pelicula.poster.url }}" alt="{{ pelicula.title }}" style="max-width: 300px; margin-bottom: 20px;">
-{% endif %}
-<p><strong>Título:</strong> {{ pelicula.title }}</p>
-<p><strong>Director:</strong> {{ pelicula.director|default:"-" }}</p>
-<p><strong>Reparto:</strong> {{ pelicula.cast|default:"-" }}</p>
-<p><strong>País:</strong> {{ pelicula.country|default:"-" }}</p>
-<p><strong>Año de lanzamiento:</strong> {{ pelicula.release_year|default:"-" }}</p>
-<p><strong>Duración:</strong> {{ pelicula.duration|default:"-" }}</p>
-<p><strong>Clasificación:</strong> {{ pelicula.rating|default:"-" }}</p>
-<p><strong>Categorías:</strong> {{ pelicula.listed_in|default:"-" }}</p>
-<p><strong>Descripción:</strong> {{ pelicula.description|default:"-" }}</p>
+<div class="container mt-5">
+  {% if error %}
+    <p class="text-danger">{{ error }}</p>
+  {% else %}
+    <h2>{{ pelicula.title }}</h2>
+    <hr>
 
-<hr>
+    <ul class="list-group">
+      {% for key, value in pelicula.items %}
+        <li class="list-group-item"><strong>{{ key|title }}:</strong> {{ value }}</li>
+      {% endfor %}
+    </ul>
 
-<!-- Botones de acción -->
-<p style="margin-top: 20px;">
-    <a href="{% url 'netflix_app:editar_pelicula' pelicula.pk %}" 
-       class="btn" 
-       style="background: #4CAF50; color: white; padding: 8px 14px; border-radius: 6px; text-decoration: none;">✏️ Editar</a>
-
-    <a href="{% url 'netflix_app:eliminar_pelicula' pelicula.pk %}" 
-       class="btn" 
-       style="background: #f44336; color: white; padding: 8px 14px; border-radius: 6px; text-decoration: none;">🗑️ Eliminar</a>
-
-    <a href="{% url 'netflix_app:lista_peliculas' %}" 
-       class="btn" 
-       style="background: #555; color: white; padding: 8px 14px; border-radius: 6px; text-decoration: none;">⬅️ Volver</a>
-</p>
+    <hr>
+    <h4>Películas similares</h4>
+    {% if recomendaciones %}
+      <ul>
+        {% for r in recomendaciones %}
+          <li>{{ r.titulo }} ({{ r.similitud }}%)</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No hay recomendaciones disponibles.</p>
+    {% endif %}
+  {% endif %}
+</div>
 {% endblock %}

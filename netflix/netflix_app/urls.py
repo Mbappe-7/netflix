@@ -3,23 +3,12 @@ from . import views
 
 app_name = "netflix_app"
 urlpatterns = [
-    # PELÍCULAS
-    path("", views.home, name="home"),
-    path("peliculas/", views.lista_peliculas, name="lista_peliculas"),
-    path("peliculas/crear/", views.crear_pelicula, name="crear_pelicula"),
-    path("peliculas/<int:id>/", views.detalle_pelicula, name="detalle_pelicula"),
-    path("peliculas/editar/<int:id>/", views.editar_pelicula, name="editar_pelicula"),
-    path(
-        "peliculas/eliminar/<int:id>/",
-        views.eliminar_pelicula,
-        name="eliminar_pelicula",
-    ),
-    # SERIES
-    path("series/", views.lista_series, name="lista_series"),
-    path("series/agregar/", views.editar_serie, name="editar_serie"),
-    path("series/editar/<int:id>/", views.editar_serie, name="editar_serie"),
-    path("series/eliminar/<int:id>/", views.eliminar_serie, name="eliminar_serie"),
-    path("series/<int:id>/", views.detalle_serie, name="detalle_serie"),
+    path('', views.home, name='home'),
+    path('consulta/', views.formulario_consulta, name='formulario_consulta'),
+    path('peliculas/', views.lista_peliculas, name='lista_peliculas'),
+    path('peliculas/<int:id>/', views.detalle_pelicula, name='detalle_pelicula'),
+
     # CONSULTAS IA
     path('consulta/', views.formulario_consulta, name='formulario_consulta'),
+
 ]

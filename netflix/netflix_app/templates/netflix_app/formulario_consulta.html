@@ -1,49 +1,38 @@
 {% extends "netflix_app/base.html" %}
-{% load static %}
-
 {% block content %}
-<div class="consulta-container">
-  <h2>🎬 Recomendador de Películas</h2>
+<div class="container mt-5">
+  <h2>Recomendador de películas</h2>
 
-  <form method="POST" action="">
+  <form method="POST" class="mt-3">
     {% csrf_token %}
-    <label for="consulta">Ingresa una película o género:</label>
-    <input type="text" name="consulta" id="consulta" placeholder="Ejemplo: Acción, Titanic, Marvel" required>
-    <button type="submit">Obtener recomendaciones</button>
+    <div class="mb-3">
+      <label for="titulo" class="form-label">Escribe el título de una película:</label>
+      <input type="text" id="titulo" name="titulo" class="form-control" value="{{ titulo_busqueda }}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Buscar similares</button>
   </form>
 
-  {% if error %}
-    <p style="color: red;">{{ error }}</p>
-  {% endif %}
-
   {% if recomendaciones %}
-    <h3>🎯 Resultados recomendados</h3>
-    <table class="tabla-recomendaciones">
-      <thead>
-        <tr>
-          <th>Título</th>
-          <th>Género</th>
-          <th>Año</th>
-          <th>Duración</th>
-          <th>Director</th>
-          <th>País</th>
-          <th>Calificación</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for r in recomendaciones %}
-        <tr>
-          <td>{{ r.titulo }}</td>
-          <td>{{ r.genero }}</td>
-          <td>{{ r.año }}</td>
-          <td>{{ r.duracion }}</td>
-          <td>{{ r.director }}</td>
-          <td>{{ r.pais }}</td>
-          <td>{{ r.calificacion }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+  <hr>
+  <h4>Películas similares a <strong>{{ titulo_busqueda }}</strong>:</h4>
+  <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%; color: #fff; background-color: #333; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);">
+    <thead style="background-color: #e84d13;">
+      <tr>
+        <th>Título</th>
+        <th>Similitud (%)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for rec in recomendaciones %}
+      <tr>
+        <td>{{ rec.titulo }}</td>
+        <td>{{ rec.similitud }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% elif titulo_busqueda %}
+  <p class="mt-3 text-danger">No se encontraron coincidencias para "{{ titulo_busqueda }}"</p>
   {% endif %}
 </div>
 {% endblock %}
