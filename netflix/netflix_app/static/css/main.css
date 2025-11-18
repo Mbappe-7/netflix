@@ -10,7 +10,7 @@ body {
 h1,
 h2,
 h3 {
-    color: #e84d13;
+    color: #720606;
     margin-bottom: 15px;
 }
 
@@ -30,7 +30,7 @@ nav a {
     /* Para que se comporten como botones */
     padding: 8px 16px;
     margin-right: 10px;
-    background-color: #e84d13;
+    background-color: #720606;
     /* Fondo naranja */
     color: #fff;
     /* Texto blanco */
@@ -40,16 +40,18 @@ nav a {
     font-weight: 500;
     transition: background 0.3s, transform 0.2s;
 }
-
+div a{
+    background-color: #720606;
+}
 nav a:hover {
-    background-color: #c63c0f;
+    background-color: #720606;
     /* Un naranja más oscuro al pasar */
     transform: translateY(-2px);
     /* Pequeño “lift” */
 }
 
 nav a:active {
-    background-color: #a6300c;
+    background-color: #d30a0a;
     /* Aún más oscuro al hacer clic */
     transform: translateY(0);
     /* Vuelve a su lugar */
@@ -90,7 +92,7 @@ hr {
 
 .alert-error {
     background: #ffecec;
-    border: 1px solid #ff3b30;
+    border: 1px solid #720606;
     color: #721c24;
 }
 
@@ -103,7 +105,7 @@ table{
 .btn {
     border-radius: 7%;
     padding: 7px 16px;
-    background-color: #e84d13; 
+    background-color: #720606; 
     color: #fff;
     text-decoration: none;
 }

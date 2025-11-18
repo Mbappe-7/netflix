@@ -3,26 +3,81 @@
 {% block content %}
 
 {% if error %}
-  <h2 style="color: red;">{{ error }}</h2>
+  <h2 style="color: rgb(136, 6, 6); text-align:center; margin-top:40px;">
+    {{ error }}
+  </h2>
 {% else %}
-  <div style="width:80%; margin:auto; padding:20px; font-family:'Poppins', sans-serif;">
-    <h1 style="color:#ff4500;">🎬 {{ titulo }}</h1>
-    <p><strong>Género:</strong> {{ genero }}</p>
-    <p><strong>Año:</strong> {{ anio }}</p>
-    <p><strong>Duración:</strong> {{ duracion }}</p>
-    <p><strong>Director:</strong> {{ director }}</p>
-    <p><strong>País:</strong> {{ pais }}</p>
-    {% if recomendaciones %}
-      <h3 style="margin-top:30px; color:#ff4500;">Películas relacionadas:</h3>
-      <ul>
-        {% for rec in recomendaciones %}
-          <li>{{ rec }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
 
-    <a href="{% url 'netflix_app:lista_peliculas' %}" style="display:inline-block; margin-top:20px; color:#fff; background:#ff4500; padding:10px 20px; border-radius:8px; text-decoration:none;">⬅ Volver a la lista</a>
+<div style="
+    background-size: #fff;
+    max-width: 850px;
+    margin: 40px auto;
+    background: #e9d9d9;
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
+    font-family:'Poppins', sans-serif;
+">
+
+  <h1 style="
+      color:#b30000; 
+      font-size: 2.2rem;
+      text-align:center;
+      margin-bottom: 25px;
+  ">
+    🎬 {{ titulo }}
+  </h1>
+
+  <div style="font-size: 1.1rem; line-height: 1.8;">
+      <p><strong style="color:#b30000;">Género:</strong> {{ genero }}</p>
+      <p><strong style="color:#b30000;">Año:</strong> {{ anio }}</p>
+      <p><strong style="color:#b30000;">Duración:</strong> {{ duracion }}</p>
+      <p><strong style="color:#b30000;">Director:</strong> {{ director }}</p>
+      <p><strong style="color:#b30000;">País:</strong> {{ pais }}</p>
   </div>
+
+  {% if recomendaciones %}
+    <h3 style="
+        margin-top:35px; 
+        color:#b30000; 
+        font-size: 1.6rem;
+        border-left: 5px solid #b30000;
+        padding-left: 10px;
+    ">
+      Películas relacionadas:
+    </h3>
+
+    <ul style="
+        margin-top:15px;
+        padding-left: 25px;
+        font-size: 1.05rem;
+    ">
+      {% for rec in recomendaciones %}
+        <li style="margin-bottom: 6px;">{{ rec }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <div style="text-align:center; margin-top:35px;">
+    <a href="{% url 'netflix_app:lista_peliculas' %}"
+      style="
+        color:#fff; 
+        background:#e63900;
+        padding:12px 30px;
+        border-radius:10px;
+        font-size:1rem;
+        text-decoration:none;
+        transition:0.3s;
+      "
+      onmouseover="this.style.opacity='0.85'"
+      onmouseout="this.style.opacity='1'"
+    >
+      ⬅ Volver a la lista
+    </a>
+  </div>
+
+</div>
+
 {% endif %}
 
 {% endblock %}
